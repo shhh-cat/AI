@@ -1,7 +1,4 @@
-import java.util.HashSet;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 public class BestFirstSearch {
@@ -53,19 +50,26 @@ public class BestFirstSearch {
         vertexQueue.add(new Vertex(0,source));
         visited.add(source);
         while (!vertexQueue.isEmpty()) {
+
             Vertex vertex = vertexQueue.poll();
             String label = vertex.label;
-            Integer preCost = vertex.withCost;
-            if (label == target) return;
+
+            System.out.print(label +" ");
+            Iterator<Vertex> iterable = vertexQueue.iterator();
+            while (iterable.hasNext()) System.out.print(iterable.next().label + " ");
+            System.out.println();
             for (Vertex v: graph.getAdjVertices(label)) {
                 if (!visited.contains(v.label)) {
-                    v.setWithCost(v.withCost + preCost);
+                    if (label == target) {
+                        System.out.println(label);
+                        return;
+                    }
                     visited.add(v.label);
                     vertexQueue.add(v);
-
                 }
             }
-            System.out.println(vertexQueue.peek() != null ? vertexQueue.peek().label + " ": "");
+
         }
+        System.out.println("failed");
     }
 }
